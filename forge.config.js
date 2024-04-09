@@ -9,8 +9,9 @@ module.exports = {
     name: "Dysperse",
   },
   targets: {
-    mac: ["zip"],
-    win: ["squirrel"],
+    win32: ["squirrel"],
+    darwin: ["dmg", "zip"],
+    linux: ["deb", "rpm"],
   },
   rebuildConfig: {},
   makers: [
