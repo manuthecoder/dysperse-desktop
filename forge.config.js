@@ -47,7 +47,11 @@ module.exports = {
     {
       name: "@electron-forge/maker-appx",
       config: {
+        identityName: "36696Dysperse.Dysperse",
         publisher: "CN=05A5E870-040E-4832-AE11-60DF88D43653",
+        publisherDisplayName: "Dysperse",
+        applicationId: "Dysperse",
+        displayName: "Dysperse",
       },
     },
   ],
