@@ -1,0 +1,8 @@
+os: osx
+language: node_js
+node_js:
+  - "node" # or specify a particular version if needed
+before_script:
+  - npm install -g electron-packager
+script:
+  - electron-packager . Dysperse --platform=darwin --arch=x64 --out=dist
