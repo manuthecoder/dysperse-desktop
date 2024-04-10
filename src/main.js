@@ -1,3 +1,5 @@
+process.env.GOOGLE_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
+
 if (require("electron-squirrel-startup")) return;
 
 // Modules to control application life and create native browser window
