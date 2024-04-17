@@ -8,23 +8,8 @@ module.exports = {
     icon: "./src/icon",
     name: "Dysperse",
   },
-  targets: {
-    win32: ["squirrel"],
-    darwin: ["dmg", "zip"],
-    linux: ["deb", "rpm"],
-  },
   rebuildConfig: {},
   makers: [
-    {
-      name: "@electron-forge/maker-squirrel",
-      config: {
-        iconUrl: "https://assets.dysperse.com/desktop.ico",
-        setupExe: "Dysperse.exe",
-        setupIcon: path.join(__dirname, "src/icon.ico"),
-        loadingGif: path.join(__dirname, "src/icon.gif"),
-        skipUpdateIcon: true,
-      },
-    },
     {
       name: "@electron-forge/maker-zip",
       platforms: ["darwin"],
@@ -47,9 +32,8 @@ module.exports = {
     {
       name: "@electron-forge/maker-appx",
       config: {
-        identityName: "36696Dysperse.Dysperse",
+        identityName: "36696Dysperse.318114851B57C",
         publisher: "CN=05A5E870-040E-4832-AE11-60DF88D43653",
-        publisherDisplayName: "Dysperse",
         applicationId: "Dysperse",
         displayName: "Dysperse",
       },
