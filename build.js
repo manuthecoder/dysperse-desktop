@@ -6,8 +6,12 @@ convertToWindowsStore({
   packageName: "Dysperse",
   packageDisplayName: "Dysperse",
   publisherDisplayName: "Dysperse",
+
+  packageVersion: "1.0.2.0",
+  packageBackgroundColor: "transparent",
+
   inputDirectory: "./out/Dysperse-win32-x64",
   outputDirectory: "./out/installer",
-  packageVersion: "1.0.1.0",
+  packageDescription: "Dysperse is minimalist productivity, built for humans.",
   assets: "C:\\Users\\manus\\OneDrive\\Desktop\\dysperse-desktop\\assets",
 });
