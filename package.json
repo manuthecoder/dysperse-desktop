@@ -4,6 +4,7 @@
   "description": "Dysperse",
   "main": "src/main.js",
   "scripts": {
+    "start": "electron-forge start",
     "build": "electron-forge package"
   },
   "keywords": [],
