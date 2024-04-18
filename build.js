@@ -15,4 +15,7 @@ convertToWindowsStore({
   outputDirectory: "./out/installer",
   packageDescription: "Dysperse is minimalist productivity, built for humans.",
   assets: "C:\\Users\\manus\\OneDrive\\Desktop\\dysperse-desktop\\assets",
+  makeVersionWinStoreCompatible: true,
+  manifest:
+    "C:\\Users\\manus\\OneDrive\\Desktop\\dysperse-desktop\\manifest.xml",
 });
