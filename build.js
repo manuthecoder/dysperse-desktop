@@ -8,7 +8,7 @@ convertToWindowsStore({
   packageDisplayName: "Dysperse",
   publisherDisplayName: "Dysperse",
 
-  packageVersion: "1.0.4.0",
+  packageVersion: "1.0.5.0",
   packageBackgroundColor: "transparent",
 
   inputDirectory: "./out/Dysperse-win32-x64",
