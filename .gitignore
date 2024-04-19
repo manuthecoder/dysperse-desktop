@@ -1,5 +1,6 @@
 # remove out directory and all of its contents
-out/
+out/Dysperse-win32-x64/
+out/installer/
 
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
