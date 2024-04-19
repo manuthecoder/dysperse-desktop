@@ -11,18 +11,6 @@ module.exports = {
   rebuildConfig: {},
   makers: [
     {
-      name: "@electron-forge/maker-zip",
-      platforms: ["darwin"],
-    },
-    {
-      name: "@electron-forge/maker-deb",
-      config: {
-        options: {
-          icon: path.join(__dirname, "src/icon.png"),
-        },
-      },
-    },
-    {
       // Path to the icon to use for the app in the DMG window
       name: "@electron-forge/maker-dmg",
       config: {

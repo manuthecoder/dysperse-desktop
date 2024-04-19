@@ -17,6 +17,7 @@ notifications:
   email: false
 script:
   - npm run build
+  - ls -R
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
