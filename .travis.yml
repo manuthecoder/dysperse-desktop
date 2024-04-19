@@ -7,12 +7,10 @@ matrix:
       dist: xenial
       sudo: required
     - os: osx
-cache:
-  yarn: true
 notifications:
   email: false
 script:
-  - yarn dist
+  - npm run build
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
