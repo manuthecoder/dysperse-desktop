@@ -22,4 +22,4 @@ deploy:
   api_key: $GITHUB_TOKEN
   skip_cleanup: true
   on:
-    branch: master
+    branch: main
