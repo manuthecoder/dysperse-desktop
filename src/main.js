@@ -142,30 +142,34 @@ function createWindow() {
   mainWindow.loadURL("https://app.dysperse.com");
 
   const setColor = () => {
-    if (!mainWindow.isFocused()) return;
+    try {
+      if (!mainWindow.isFocused()) return;
 
-    const metaTags = mainWindow.webContents.executeJavaScript(`
+      const metaTags = mainWindow.webContents.executeJavaScript(`
       Array.from(document.querySelectorAll('meta')).map(tag => ({
         name: tag.getAttribute('name'),
         content: tag.getAttribute('content')
       }));
     `);
 
-    metaTags
-      .then((tags) => {
-        const t = tags.filter((tag) => tag.name === "theme-color")?.[0];
-        if (t) {
-          // get 98.0% from hsl(240, 20.0%, 98.0%)
-          const color = t.content?.split(",")?.[2]?.split("%")?.[0];
-          mainWindow.setTitleBarOverlay({
-            color: `rgba(0,0,0,0)`,
-            symbolColor: color > 50 ? "#000" : "#fff",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error retrieving meta tags:", error);
-      });
+      metaTags
+        .then((tags) => {
+          const t = tags.filter((tag) => tag.name === "theme-color")?.[0];
+          if (t) {
+            // get 98.0% from hsl(240, 20.0%, 98.0%)
+            const color = t.content?.split(",")?.[2]?.split("%")?.[0];
+            mainWindow.setTitleBarOverlay({
+              color: `rgba(0,0,0,0)`,
+              symbolColor: color > 50 ? "#000" : "#fff",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error retrieving meta tags:", error);
+        });
+    } catch (error) {
+      console.error("Error setting color:", error);
+    }
   };
 
   mainWindow.webContents.on("dom-ready", () => {
