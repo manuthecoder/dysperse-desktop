@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "electron-installer-dmg": "^4.0.0",
     "electron-squirrel-startup": "^1.0.0",
-    "express": "^4.19.2"
+    "express": "^4.20.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.3.1",
