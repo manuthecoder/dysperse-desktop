@@ -1,7 +1,7 @@
 process.env.GOOGLE_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, shell, Tray, Menu } = require("electron");
+const { app, BrowserWindow, shell, Tray, Menu, nativeTheme } = require("electron");
 
 if (require("electron-squirrel-startup")) app.quit();
 
@@ -97,7 +97,7 @@ function createWindow() {
       symbolColor: "#fff",
     },
     titleBarStyle: "hidden",
-    backgroundColor: "#000",
+    backgroundColor: nativeTheme.shouldUseDarkColors ? "hsl(174, 51.2%, 8.0%)" : "hsl(164, 88.2%, 96.7%)",
     webPreferences: {
       nodeIntegration: true,
       scrollBounce: true,
@@ -175,6 +175,28 @@ function createWindow() {
   mainWindow.webContents.on("dom-ready", () => {
     setColor();
     setInterval(setColor, 1000);
+  });
+
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (url.includes("fullscreen=true")) {
+      return {
+        action: 'allow',
+        overrideBrowserWindowOptions: {
+          fullscreenable: false,
+          autoHideMenuBar: true,
+          icon: path.join(__dirname, "icon.ico"),
+          center: true,
+          titleBarOverlay: {
+            color: "rgba(0,0,0,0)",
+            symbolColor: "#aaa",
+          },
+          titleBarStyle: "hidden",
+          backgroundColor: nativeTheme.shouldUseDarkColors ? "hsl(174, 51.2%, 8.0%)" : "hsl(164, 88.2%, 96.7%)"
+        }
+      }
+    } else {
+      shell.openExternal(url);
+    }
   });
 }
 
