@@ -1,7 +1,7 @@
 process.env.GOOGLE_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, shell, Tray, Menu, nativeTheme } = require("electron");
+const { app, BrowserWindow, shell, Tray, Menu, nativeTheme, screen } = require("electron");
 
 if (require("electron-squirrel-startup")) app.quit();
 
@@ -83,10 +83,12 @@ let mainWindow;
 let tray;
 
 function createWindow() {
+  const s = screen.getPrimaryDisplay().workAreaSize;
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: Math.min(s.width - 100, 1200),
+    height: Math.min(s.height - 100, 700),
     minWidth: 800,
     minHeight: 600,
     autoHideMenuBar: true,
@@ -116,11 +118,6 @@ function createWindow() {
   mainWindow.on("close", (event) => {
     event.preventDefault();
     mainWindow.hide();
-  });
-
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url);
-    return { action: "deny" };
   });
 
   let loadingTimer;
@@ -178,7 +175,9 @@ function createWindow() {
   });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.includes("fullscreen=true")) {
+    if (
+      new URL(url).origin === "https://app.dysperse.com" && url.includes('fullscreen=true')
+    ) {
       return {
         action: 'allow',
         overrideBrowserWindowOptions: {
@@ -190,12 +189,16 @@ function createWindow() {
             color: "rgba(0,0,0,0)",
             symbolColor: "#aaa",
           },
+          webPreferences: {
+            devTools: false,
+          },
           titleBarStyle: "hidden",
           backgroundColor: nativeTheme.shouldUseDarkColors ? "hsl(174, 51.2%, 8.0%)" : "hsl(164, 88.2%, 96.7%)"
         }
       }
     } else {
       shell.openExternal(url);
+      return { action: 'deny' };
     }
   });
 }
@@ -242,6 +245,13 @@ if (!gotTheLock) {
       tray.on("click", () => mainWindow && mainWindow.show());
     }
   });
+
+  app.on('browser-window-created', (e, window) => {
+    window.webContents.setWindowOpenHandler(({ url }) => {
+      shell.openExternal(url);
+      return { action: 'deny' };
+    });
+  })
 }
 
 app.on("window-all-closed", function () {
