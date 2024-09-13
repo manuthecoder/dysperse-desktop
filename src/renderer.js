@@ -33,6 +33,7 @@ ipcRenderer.on(NOTIFICATION_RECEIVED, (_, { notification }) => {
     new Notification(notification.title, {
         body: notification.body,
         title: notification.title,
+        data: notification.data,
         badge: "https://assets.dysperse.com/monochrome-small.png",
         icon: "https://assets.dysperse.com/v12-rounded/ios/167.png",
     });
