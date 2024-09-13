@@ -2,6 +2,7 @@ process.env.GOOGLE_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, shell, Tray, Menu, nativeTheme, screen } = require("electron");
+const { setup: setupPushReceiver } = require('firebase-electron');
 
 if (require("electron-squirrel-startup")) app.quit();
 
@@ -82,6 +83,13 @@ const gotTheLock = app.requestSingleInstanceLock();
 let mainWindow;
 let tray;
 
+app.on("ready", ev => {
+  if (process.platform == 'win32') {
+    app.setAppUserModelId('Dysperse');
+  }
+});
+
+
 function createWindow() {
   const s = screen.getPrimaryDisplay().workAreaSize;
 
@@ -137,6 +145,9 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL("https://app.dysperse.com");
+
+  // Initialize electron-push-receiver component. Should be called before 'did-finish-load'
+  setupPushReceiver(mainWindow.webContents);
 
   const setColor = () => {
     try {
