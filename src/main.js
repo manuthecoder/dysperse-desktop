@@ -79,7 +79,7 @@ function handleSquirrelEvent() {
 const path = require("path");
 
 const gotTheLock = app.requestSingleInstanceLock();
-const APP_URL = "http://localhost:8081";
+const APP_URL = "https://app.dysperse.com";
 
 let mainWindow;
 let tray;
