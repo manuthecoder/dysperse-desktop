@@ -24,7 +24,9 @@ ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
 });
 // Send FCM token to backend
 ipcRenderer.on(TOKEN_UPDATED, (_, token) => {
-    // Send token
+    console.log('Notification service successfully started');
+    console.log('Token: ', token);
+    contextBridge.exposeInMainWorld("FCM_DEVICE_TOKEN", token);
 });
 // Display notification
 ipcRenderer.on(NOTIFICATION_RECEIVED, (_, { notification }) => {
