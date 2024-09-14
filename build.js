@@ -3,11 +3,15 @@ const package = require('./package.json');
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const manifest = fs.readFileSync('./manifest.template.json', 'utf8');
+console.log("⏳ Generating manifest...")
+const manifest = fs.readFileSync('./manifest.template.xml', 'utf8');
 fs.writeFileSync('./manifest.xml', manifest.replace('PACKAGE_JSON_VERSION', package.version));
 
-execSync("electron-forge package");
-
+console.log("✅ Manifest generated!");
+console.log("⏳ Building package (electorn-forge package)...")
+execSync("electron-forge package", { stdio: 'inherit' });
+console.log("✅ Package built!");
+console.log("⏳ Converting package to Windows Store format...")
 convertToWindowsStore({
   makePri: true,
   identityName: "36696Dysperse.318114851B57C",
@@ -26,3 +30,4 @@ convertToWindowsStore({
   makeVersionWinStoreCompatible: true,
   manifest: "./manifest.xml",
 });
+console.log("✅ Package converted to Windows Store format!");

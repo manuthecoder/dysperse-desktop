@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron-forge start",
-    "build:win": "electron-forge package",
+    "build:win": "node build.js",
     "build": "electron-forge package"
   },
   "keywords": [],
