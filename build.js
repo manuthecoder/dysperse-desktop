@@ -1,4 +1,12 @@
 const convertToWindowsStore = require("electron-windows-store");
+const package = require('./package.json');
+const fs = require('fs');
+const { execSync } = require('child_process');
+
+const manifest = fs.readFileSync('./manifest.template.json', 'utf8');
+fs.writeFileSync('./manifest.xml', manifest.replace('PACKAGE_JSON_VERSION', package.version));
+
+execSync("electron-forge package");
 
 convertToWindowsStore({
   makePri: true,
@@ -8,7 +16,7 @@ convertToWindowsStore({
   packageDisplayName: "Dysperse",
   publisherDisplayName: "Dysperse",
 
-  packageVersion: "1.0.9.0",
+  packageVersion: package.version,
   packageBackgroundColor: "transparent",
 
   inputDirectory: "./out/Dysperse-win32-x64",
@@ -16,6 +24,5 @@ convertToWindowsStore({
   packageDescription: "Dysperse is minimalist productivity, built for humans.",
   assets: "./assets",
   makeVersionWinStoreCompatible: true,
-  manifest:
-    "./manifest.xml",
+  manifest: "./manifest.xml",
 });

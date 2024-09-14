@@ -6,7 +6,7 @@
   <Identity Name="36696Dysperse.318114851B57C"
     ProcessorArchitecture="x64"
     Publisher="CN=05A5E870-040E-4832-AE11-60DF88D43653"
-    Version="1.0.9.0" />
+    Version="PACKAGE_JSON_VERSION" />
   <Properties>
     <DisplayName>Dysperse</DisplayName>
     <PublisherDisplayName>Dysperse</PublisherDisplayName>
