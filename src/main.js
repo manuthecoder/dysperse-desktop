@@ -79,6 +79,7 @@ function handleSquirrelEvent() {
 const path = require("path");
 
 const gotTheLock = app.requestSingleInstanceLock();
+const APP_URL = "http://localhost:8081";
 
 let mainWindow;
 let tray;
@@ -144,7 +145,7 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL("https://app.dysperse.com");
+  mainWindow.loadURL(APP_URL);
 
   // Initialize electron-push-receiver component. Should be called before 'did-finish-load'
   setupPushReceiver(mainWindow.webContents);
@@ -187,7 +188,7 @@ function createWindow() {
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (
-      new URL(url).origin === "https://app.dysperse.com" && url.includes('fullscreen=true')
+      new URL(url).origin === new URL(APP_URL).origin && url.includes('fullscreen=true')
     ) {
       return {
         action: 'allow',

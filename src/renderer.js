@@ -16,7 +16,7 @@ const vapidKey = 'BAvJ6756CsbwOerFCb_NlrhYMPktQyyeKgBVDFH7RiIBL3IXdel_TJ3CmnO2qw
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_, token) => {
     console.log('Notification service successfully started');
     console.log('Token: ', token);
-    contextBridge.exposeInMainWorld("WINDOWS_PUSH_TOKEN", token);
+    contextBridge.exposeInMainWorld("FCM_DEVICE_TOKEN", token);
 });
 // Handle notification errors
 ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
