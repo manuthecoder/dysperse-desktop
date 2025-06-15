@@ -160,6 +160,7 @@ function createWindow() {
         content: tag.getAttribute('content')
       }));
     `);
+      if (!metaTags) return;
 
       metaTags
         .then((tags) => {
