@@ -187,27 +187,27 @@ function createWindow() {
   });
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (
-      new URL(url).origin === new URL(APP_URL).origin && url.includes('fullscreen=true')
-    ) {
-      return {
-        action: 'allow',
-        overrideBrowserWindowOptions: {
-          fullscreenable: false,
-          autoHideMenuBar: true,
-          icon: path.join(__dirname, "icon.ico"),
-          center: true,
-          titleBarOverlay: {
-            color: "rgba(0,0,0,0)",
-            symbolColor: "#aaa",
-          },
-          webPreferences: {
-            devTools: false,
-          },
-          titleBarStyle: "hidden",
-          backgroundColor: nativeTheme.shouldUseDarkColors ? "hsl(174, 51.2%, 8.0%)" : "hsl(164, 88.2%, 96.7%)"
-        }
-      }
+    const isLocal = new URL(url).origin === new URL(APP_URL).origin || url.includes("accounts.google.com");
+
+    if (isLocal) {
+      const popup = new BrowserWindow({
+        width: 500,
+        height: 600,
+        parent: mainWindow,
+        modal: false,
+        autoHideMenuBar: true,
+        show: true,
+        title: "Dysperse",
+        icon: path.join(__dirname, "icon.ico"),
+        webPreferences: {
+          nodeIntegration: false,
+          contextIsolation: true,
+          preload: path.join(__dirname, "preload.js"),
+        },
+      });
+
+      popup.loadURL(url);
+      return { action: 'deny' }; // deny the default, since we're handling it ourselves
     } else {
       shell.openExternal(url);
       return { action: 'deny' };
