@@ -9,7 +9,7 @@ fs.writeFileSync('./manifest.xml', manifest.replace('PACKAGE_JSON_VERSION', pack
 
 console.log("✅ Manifest generated!");
 console.log("⏳ Building package (electorn-forge package)...")
-execSync("electron-forge package", { stdio: 'inherit' });
+execSync("npm run build", { stdio: 'inherit' });
 console.log("✅ Package built!");
 console.log("⏳ Converting package to Windows Store format...")
 convertToWindowsStore({
