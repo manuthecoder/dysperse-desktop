@@ -253,7 +253,7 @@ if (!gotTheLock) {
       }
 
       const path = commandLine.pop();
-      if (path) {
+      if (path && path.startsWith("dysperse://")) {
         const cleanedPath = path.replace("dysperse://", "").replace(/\/$/, "");
         console.log(`${APP_URL}/${cleanedPath}?deepLink=true`);
         mainWindow.loadURL(`${APP_URL}/${cleanedPath}?deepLink=true`);
