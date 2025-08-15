@@ -225,12 +225,16 @@ app.whenReady().then(() => {
     }
   })
   globalShortcut.register('CommandOrControl+Shift+;', () => {
-    if (!mainWindow) return;
-    if (!mainWindow.isVisible()) mainWindow.show();
-    mainWindow.focus();
-    mainWindow.webContents.executeJavaScript(
-      `window.dispatchEvent(new CustomEvent('dysperse-shortcut', { detail: { action: 'create-task' } }));`
-    );
+    if (mainWindow && mainWindow.isVisible()) {
+      mainWindow.hide()
+    } else {
+      if (!mainWindow) return;
+      if (!mainWindow.isVisible()) mainWindow.show();
+      mainWindow.focus();
+      mainWindow.webContents.executeJavaScript(
+        `window.dispatchEvent(new CustomEvent('dysperse-shortcut', { detail: { action: 'create-task' } }));`
+      );
+    }
   })
 })
 
