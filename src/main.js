@@ -1,7 +1,7 @@
 process.env.GOOGLE_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw";
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, shell, Tray, Menu, nativeTheme, screen } = require("electron");
+const { app, BrowserWindow, shell, Tray, Menu, nativeTheme, screen, globalShortcut } = require("electron");
 const { setup: setupPushReceiver } = require('firebase-electron');
 
 if (require("electron-squirrel-startup")) app.quit();
@@ -216,20 +216,43 @@ function createWindow() {
   });
 }
 
+app.whenReady().then(() => {
+  globalShortcut.register('CommandOrControl+;', () => {
+    if (mainWindow && mainWindow.isVisible()) {
+      mainWindow.hide()
+    } else {
+      app.isAccessibilitySupportEnabled() ? app.show() : mainWindow && mainWindow.show();
+    }
+  })
+  globalShortcut.register('CommandOrControl+Shift+;', () => {
+    if (!mainWindow) return;
+    if (!mainWindow.isVisible()) mainWindow.show();
+    mainWindow.focus();
+    mainWindow.webContents.executeJavaScript(
+      `window.dispatchEvent(new CustomEvent('dysperse-shortcut', { detail: { action: 'create-task' } }));`
+    );
+  })
+})
+
+
 if (!gotTheLock) {
   app.quit();
 } else {
   app.on(
     "second-instance",
     (event, commandLine, workingDirectory, additionalData) => {
-      // Print out data received from the second instance.
-      console.log(additionalData);
-
       // Someone tried to run a second instance, we should focus our window.
       if (mainWindow) {
         if (mainWindow.isMinimized()) mainWindow.restore();
         mainWindow.show();
         mainWindow.focus();
+      }
+
+      const path = commandLine.pop();
+      if (path) {
+        const cleanedPath = path.replace("dysperse://", "").replace(/\/$/, "");
+        console.log(`${APP_URL}/${cleanedPath}?deepLink=true`);
+        mainWindow.loadURL(`${APP_URL}/${cleanedPath}?deepLink=true`);
       }
     }
   );
@@ -270,3 +293,11 @@ if (!gotTheLock) {
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
 });
+
+if (process.defaultApp) {
+  if (process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient('dysperse', process.execPath, [path.resolve(process.argv[1])])
+  }
+} else {
+  app.setAsDefaultProtocolClient('dysperse')
+}
